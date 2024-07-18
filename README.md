@@ -172,11 +172,129 @@ let unit: number; // Declare variable without assigning a value
 unit = 5;
 ```
 
+But it's usually best to not explicitly state the type, as TypeScript automatically infers the type of a variable (type inference):
+
+```bash
+let id = 5; // TS knows it's a number
+let firstname = 'danny'; // TS knows it's a string
+let hasDog = true; // TS knows it's a boolean
+
+hasDog = 'yes'; // ERROR
+```
+
+We can also set a variable to be able to be a union type. A union type is a variable that can be assigned more than one type:
+
+```bash
+let age: string | number;
+age = 26;
+age = '26';
+```
+
+## Arrays in TypeScript
+
+In TypeScript, you can define what type of data an array can contain:
+
+```bash
+let ids: number[] = [1, 2, 3, 4, 5]; // can only contain numbers
+let names: string[] = ['Danny', 'Anna', 'Bazza']; // can only contain strings
+let options: boolean[] = [true, false, false]; can only contain true or false
+let books: object[] = [
+  { name: 'Fooled by randomness', author: 'Nassim Taleb' },
+  { name: 'Sapiens', author: 'Yuval Noah Harari' },
+]; // can only contain objects
+let arr: any[] = ['hello', 1, true]; // any basically reverts TypeScript back into JavaScript
+
+ids.push(6);
+ids.push('7'); // ERROR: Argument of type 'string' is not assignable to parameter of type 'number'.
+```
+
+You can use union types to define arrays containing multiple types:
+
+```bash
+let person: (string | number | boolean)[] = ['Danny', 1, true];
+person[0] = 100;
+person[1] = {name: 'Danny'} // Error - person array can't contain objects
+```
+
+There is a special type of array that can be defined in TypeScript: Tuples. A tuple is an array with fixed size and known datatypes. They are stricter than regular arrays.
+
+```bash
+let person: [string, number, boolean] = ['Danny', 1, true];
+person[0] = 100; // Error - Value at index 0 can only be a string
+```
+
+## Objects
+
+Objects in TypeScript must have all the correct properties and value types:
+
+```bash
+// Declare a variable called person with a specific object type annotation
+let person: {
+  name: string;
+  location: string;
+  isProgrammer: boolean;
+};
+
+// Assign person to an object with all the necessary properties and value types
+person = {
+  name: 'Danny',
+  location: 'UK',
+  isProgrammer: true,
+};
+
+person.isProgrammer = 'Yes'; // ERROR: should be a boolean
 
 
+person = {
+  name: 'John',
+  location: 'US',
+}; 
+// ERROR: missing the isProgrammer property
+```
+
+When defining the signature of an object, you will usually use an interface. This is useful if we need to check that multiple objects have the same specific properties and value types:
+
+```bash
+interface Person {
+  name: string;
+  location: string;
+  isProgrammer: boolean;
+}
+
+let person1: Person = {
+  name: 'Danny',
+  location: 'UK',
+  isProgrammer: true,
+};
+
+let person2: Person = {
+  name: 'Sarah',
+  location: 'Germany',
+  isProgrammer: false,
+};
+```
+
+We can also declare function properties with function signatures. We can do this using old-school common JavaScript functions (sayHi), or ES6 arrow functions (sayBye):
+
+```bash
+interface Speech {
+  sayHi(name: string): string;
+  sayBye: (name: string) => string;
+}
+
+let sayStuff: Speech = {
+  sayHi: function (name: string) {
+    return `Hi ${name}`;
+  },
+  sayBye: (name: string) => `Bye ${name}`,
+};
+
+console.log(sayStuff.sayHi('Heisenberg')); // Hi Heisenberg
+console.log(sayStuff.sayBye('Heisenberg')); // Bye Heisenberg
+```
 
 
-
+Note that in the sayStuff object, sayHi or sayBye could be given an arrow function or a common JavaScript function – TypeScript doesn't care.
 
 
 
