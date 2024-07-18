@@ -1,3 +1,30 @@
+TypeScript has become increasingly popular over the last few years, and many jobs are now requiring developers to know TypeScript.
+
+I also added a TypeScript cheat sheet PDF and poster that summarizes this article down to one page (credit to freeCodeCamp for the poster). It will help you to revise concepts and syntax.
+
+## What is TypeScript?
+
+TypeScript is a superset of JavaScript, meaning that it does everything that JavaScript does, but with some added features.
+<br>
+The main reason for using TypeScript is to add static typing to JavaScript. Static typing means that the type of a variable cannot be changed at any point in a program. It can prevent a LOT of bugs!
+<br>
+On the other hand, JavaScript is a dynamically typed language, meaning variables can change type. Here's an example:
+<br>
+
+```bash
+// JavaScript
+let foo = "hello";
+foo = 55; // foo has changed type from a string to a number - no problem
+
+// TypeScript
+let foo = "hello";
+foo = 55; // ERROR - foo cannot change from string to number
+```
+
+
+
+
+
 # clean-coding-methods-typescript 
 
 Clean Code concepts adapted for TypeScript.  
