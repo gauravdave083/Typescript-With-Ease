@@ -1,4 +1,4 @@
-# clean-coding methods-typescript 
+# clean-coding-methods-typescript 
 
 Clean Code concepts adapted for TypeScript.  
 
