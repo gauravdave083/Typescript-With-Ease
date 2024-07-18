@@ -161,9 +161,16 @@ console.log(arr);
 ``` 
 [1, 3, 5] - the array method mutated the array
 
+Back to TypeScript, we can set the type we want a variable to be be adding : type (called a "type annotation" or a "type signature") after declaring a variable. Examples:
 
+```bash
+let id: number = 5;
+let firstname: string = 'danny';
+let hasDog: boolean = true;
 
-
+let unit: number; // Declare variable without assigning a value
+unit = 5;
+```
 
 
 
