@@ -20,6 +20,115 @@ foo = 55; // foo has changed type from a string to a number - no problem
 let foo = "hello";
 foo = 55; // ERROR - foo cannot change from string to number
 ```
+TypeScript cannot be understood by browsers, so it has to be compiled into JavaScript by the TypeScript Compiler (TSC) – which we'll discuss soon.
+
+### Is TypeScript worth it?
+Why you should use TypeScript
+Research has shown that TypeScript can spot 15% of common bugs.
+Readability – it is easier to see what the code it supposed to do. And when working in a team, it is easier to see what the other developers intended to.
+It's popular – knowing TypeScript will enable you to apply to more good jobs.
+Learning TypeScript will give you a better understanding, and a new perspective, on JavaScript.
+
+### Drawbacks of TypeScript
+TypeScript takes longer to write than JavaScript, as you have to specify types, so for smaller solo projects it might not be worth using it.
+
+TypeScript has to be compiled – which can take time, especially in larger projects.
+
+
+## How to Set Up a TypeScript Project
+
+#### Install Node and the TypeScript Compiler
+
+First, ensure you have Node installed globally on your machine.
+
+Then install the TypeScript compiler globally on your machine by running the following command:
+
+```bash
+npm i -g typescript
+```
+
+To check if the installation is successful (it will return the version number if successful):
+
+```bash
+tsc -v
+```
+
+## How to Compile TypeScript
+
+Open up your text editor and create a TypeScript file (for example, index.ts).
+
+Write some JavaScript or TypeScript:
+
+```bash
+let sport = 'football';
+
+let id = 5;
+```
+
+We can now compile this down into JavaScript with the following command:
+
+```bash
+tsc index
+```
+
+TSC will compile the code into JavaScript and output it in a file called index.js:
+
+```bash
+var sport = 'football';
+var id = 5;
+```
+
+If you want to specify the name of the output file:
+
+```bash
+tsc index.ts --outfile file-name.js
+```
+
+If you want TSC to compile your code automatically, whenever you make a change, add the "watch" flag:
+
+```bash
+tsc index.ts -w
+```
+
+An interesting thing about TypeScript is that it reports errors in your text editor while you are coding, but it will always compile your code – whether there are errors or not.
+
+
+## How to Set Up the ts config File
+
+The ts config file should be in the root directory of your project. In this file we can specify the root files, compiler options, and how strict we want TypeScript to be in checking our project.
+
+First, create the ts config file:
+
+```bash
+tsc --init
+```
+
+You should now have a tsconfig.json file in the project root.
+
+Here are some options that are good to be aware of (if using a frontend framework with TypeScript, most if this stuff is taken care of for you):
+
+```bash
+{
+    "compilerOptions": {
+        ...
+        /* Modules */
+        "target": "es2016", // Change to "ES2015" to compile to ES6
+        "rootDir": "./src", // Where to compile from
+        "outDir": "./public", // Where to compile to (usually the folder to be deployed to the web server)
+        
+        /* JavaScript Support */
+        "allowJs": true, // Allow JavaScript files to be compiled
+        "checkJs": true, // Type check JavaScript files and report errors
+        
+        /* Emit */
+        "sourceMap": true, // Create source map files for emitted JavaScript files (good for debugging)
+         "removeComments": true, // Don't emit comments
+    },
+    "include": ["src"] // Ensure only files in src are compiled
+}
+```
+
+
 
 
 
