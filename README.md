@@ -129,6 +129,47 @@ Here are some options that are good to be aware of (if using a frontend framewor
 ```
 
 
+# Types in TypeScript
+
+## Primitive types
+
+In JavaScript, a primitive value is data that is not an object and has no methods. There are 7 primitive data types:
+
+* string
+* number
+* bigint
+* boolean
+* undefined
+* null
+* symbol
+
+Primitives are immutable: they can't be altered. It is important not to confuse a primitive itself with a variable assigned a primitive value. The variable may be reassigned a new value, but the existing value can't be changed in the ways that objects, arrays, and functions can be altered.
+
+Here's an example:
+
+```bash
+let name = 'Danny';
+name.toLowerCase();
+console.log(name); 
+```
+Danny - the string method didn't mutate the string
+
+```bash
+let arr = [1, 3, 5, 7];
+arr.pop();
+console.log(arr);
+``` 
+[1, 3, 5] - the array method mutated the array
+
+
+
+
+
+
+
+
+
+
 
 
 
