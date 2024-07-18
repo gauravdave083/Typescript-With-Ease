@@ -1,3 +1,5 @@
+# TypeScript
+
 TypeScript has become increasingly popular over the last few years, and many jobs are now requiring developers to know TypeScript.
 
 I also added a TypeScript cheat sheet PDF and poster that summarizes this article down to one page (credit to freeCodeCamp for the poster). It will help you to revise concepts and syntax.
@@ -6,9 +8,12 @@ I also added a TypeScript cheat sheet PDF and poster that summarizes this articl
 
 TypeScript is a superset of JavaScript, meaning that it does everything that JavaScript does, but with some added features.
 <br>
+<br>
 The main reason for using TypeScript is to add static typing to JavaScript. Static typing means that the type of a variable cannot be changed at any point in a program. It can prevent a LOT of bugs!
 <br>
+<br>
 On the other hand, JavaScript is a dynamically typed language, meaning variables can change type. Here's an example:
+<br>
 <br>
 
 ```bash
@@ -20,51 +25,66 @@ foo = 55; // foo has changed type from a string to a number - no problem
 let foo = "hello";
 foo = 55; // ERROR - foo cannot change from string to number
 ```
+<br>
 TypeScript cannot be understood by browsers, so it has to be compiled into JavaScript by the TypeScript Compiler (TSC) – which we'll discuss soon.
+<br>
+<br>
 
 ### Is TypeScript worth it?
-Why you should use TypeScript
+Why you should use TypeScript ?
+<br>
 Research has shown that TypeScript can spot 15% of common bugs.
+<br>
 Readability – it is easier to see what the code it supposed to do. And when working in a team, it is easier to see what the other developers intended to.
+<br>
 It's popular – knowing TypeScript will enable you to apply to more good jobs.
+<br>
 Learning TypeScript will give you a better understanding, and a new perspective, on JavaScript.
+<br>
 
 ### Drawbacks of TypeScript
+<br>
+<br>
 TypeScript takes longer to write than JavaScript, as you have to specify types, so for smaller solo projects it might not be worth using it.
-
+<br>
 TypeScript has to be compiled – which can take time, especially in larger projects.
-
+<br>
 
 ## How to Set Up a TypeScript Project
+<br>
 
 #### Install Node and the TypeScript Compiler
-
+<br>
 First, ensure you have Node installed globally on your machine.
-
+<br>
 Then install the TypeScript compiler globally on your machine by running the following command:
+<br>
 
 ```bash
 npm i -g typescript
 ```
-
+<br>
 To check if the installation is successful (it will return the version number if successful):
+<br>
 
 ```bash
 tsc -v
 ```
+<br>
 
 ## How to Compile TypeScript
-
+<br>
 Open up your text editor and create a TypeScript file (for example, index.ts).
-
+<br>
 Write some JavaScript or TypeScript:
+<br>
 
 ```bash
 let sport = 'football';
 
 let id = 5;
 ```
-
+<br>
 We can now compile this down into JavaScript with the following command:
 
 ```bash
@@ -72,40 +92,47 @@ tsc index
 ```
 
 TSC will compile the code into JavaScript and output it in a file called index.js:
+<br>
 
 ```bash
 var sport = 'football';
 var id = 5;
 ```
+<br>
 
 If you want to specify the name of the output file:
+<br>
 
 ```bash
 tsc index.ts --outfile file-name.js
 ```
+<br>
 
 If you want TSC to compile your code automatically, whenever you make a change, add the "watch" flag:
+<br>
 
 ```bash
 tsc index.ts -w
 ```
-
+<br>
 An interesting thing about TypeScript is that it reports errors in your text editor while you are coding, but it will always compile your code – whether there are errors or not.
-
+<br>
 
 ## How to Set Up the ts config File
-
+<br>
 The ts config file should be in the root directory of your project. In this file we can specify the root files, compiler options, and how strict we want TypeScript to be in checking our project.
-
+<br>
 First, create the ts config file:
+<br>
 
 ```bash
 tsc --init
 ```
-
+<br>
 You should now have a tsconfig.json file in the project root.
-
+<br>
 Here are some options that are good to be aware of (if using a frontend framework with TypeScript, most if this stuff is taken care of for you):
+<br>
 
 ```bash
 {
@@ -127,7 +154,7 @@ Here are some options that are good to be aware of (if using a frontend framewor
     "include": ["src"] // Ensure only files in src are compiled
 }
 ```
-
+<br>
 
 # Types in TypeScript
 
@@ -190,6 +217,7 @@ age = 26;
 age = '26';
 ```
 
+<br>
 ## Arrays in TypeScript
 
 In TypeScript, you can define what type of data an array can contain:
@@ -207,6 +235,7 @@ let arr: any[] = ['hello', 1, true]; // any basically reverts TypeScript back in
 ids.push(6);
 ids.push('7'); // ERROR: Argument of type 'string' is not assignable to parameter of type 'number'.
 ```
+<br>
 
 You can use union types to define arrays containing multiple types:
 
@@ -215,6 +244,7 @@ let person: (string | number | boolean)[] = ['Danny', 1, true];
 person[0] = 100;
 person[1] = {name: 'Danny'} // Error - person array can't contain objects
 ```
+<br>
 
 There is a special type of array that can be defined in TypeScript: Tuples. A tuple is an array with fixed size and known datatypes. They are stricter than regular arrays.
 
@@ -222,10 +252,12 @@ There is a special type of array that can be defined in TypeScript: Tuples. A tu
 let person: [string, number, boolean] = ['Danny', 1, true];
 person[0] = 100; // Error - Value at index 0 can only be a string
 ```
+<br>
 
 ## Objects
-
+<br>
 Objects in TypeScript must have all the correct properties and value types:
+<br>
 
 ```bash
 // Declare a variable called person with a specific object type annotation
@@ -251,8 +283,9 @@ person = {
 }; 
 // ERROR: missing the isProgrammer property
 ```
-
+<br>
 When defining the signature of an object, you will usually use an interface. This is useful if we need to check that multiple objects have the same specific properties and value types:
+<br>
 
 ```bash
 interface Person {
@@ -273,8 +306,9 @@ let person2: Person = {
   isProgrammer: false,
 };
 ```
-
+<br>
 We can also declare function properties with function signatures. We can do this using old-school common JavaScript functions (sayHi), or ES6 arrow functions (sayBye):
+<br>
 
 ```bash
 interface Speech {
@@ -292,7 +326,7 @@ let sayStuff: Speech = {
 console.log(sayStuff.sayHi('Heisenberg')); // Hi Heisenberg
 console.log(sayStuff.sayBye('Heisenberg')); // Bye Heisenberg
 ```
-
+<br>
 
 Note that in the sayStuff object, sayHi or sayBye could be given an arrow function or a common JavaScript function – TypeScript doesn't care.
 
@@ -300,8 +334,9 @@ Note that in the sayStuff object, sayHi or sayBye could be given an arrow functi
 <br>
 
 ## Functions in TypeScript
-
+<br>
 We can define what the types the function arguments should be, as well as the return type of the function:
+<br>
 
 ```bash
 // Define a function called circle that takes a diam variable of type number, and returns a string
@@ -314,6 +349,7 @@ console.log(circle(10)); // The circumference is 31.41592653589793
 <br>
 
 The same function, but with an ES6 arrow function:
+<br>
 
 ```bash
 const circle = (diam: number): string => {
@@ -326,6 +362,7 @@ console.log(circle(10)); // The circumference is 31.41592653589793
 <br>
 
 Notice how it isn't necessary to explicitly state that circle is a function; TypeScript infers it. TypeScript also infers the return type of the function, so it doesn't need to be stated either. Although, if the function is large, some developers like to explicitly state the return type for clarity.
+<br>
 
 ```bash
 // Using explicit typing 
@@ -338,8 +375,9 @@ const circle = (diam: number) => {
   return 'The circumference is ' + Math.PI * diam;
 };
 ```
-
+<br>
 We can add a question mark after a parameter to make it optional. Also notice below how "c" is a union type that can be a number or string:
+<br>
 
 ```bash
 const add = (a: number, b: number, c?: number | string) => {
@@ -355,6 +393,7 @@ console.log(add(5, 4, 'I could pass a number, string, or nothing here!'));
 <br>
 
 A function that returns nothing is said to return void – a complete lack of any value. Below, the return type of void has been explicitly stated. But again, this isn't necessary as TypeScript will infer it.
+<br>
 
 ```bash
 const logMessage = (msg: string): void => {
@@ -363,8 +402,10 @@ const logMessage = (msg: string): void => {
 
 logMessage('TypeScript is superb'); // This is the message: TypeScript is superb
 ```
+<br>
 
 If we want to declare a function variable, but not define it (say exactly what it does), then use a function signature. Below, the function "sayHello" must follow the signature after the colon:
+<br>
 
 ```bash
 // Declare the varible sayHello, and give it a function signature that takes a string and returns nothing.
@@ -377,6 +418,7 @@ sayHello = (name) => {
 
 sayHello('Danny'); // Hello Danny
 ```
+<br>
 
 ## Dynamic (any) types
 
@@ -393,10 +435,12 @@ age = {
 <br>
 It's recommended to avoid using the "any" type as much as you can, as it prevents TypeScript from doing its job – and can lead to bugs.
 <br>
+<br>
 
 ## Type Aliases
-
+<br>
 Type Aliases can reduce code duplication, keeping our code DRY. Below, we can see that the "PersonObject" type alias has prevented repetition, and acts as a single source of truth for what data a person object should contain.
+<br>
 
 ```bash
 type StringOrNumber = string | number;
@@ -424,21 +468,23 @@ const sayGoodbye = (person: PersonObject) => {
   return 'Seeya ' + person.name;
 };
 ```
+<br>
 
 ## The DOM and type casting
-
+<br>
 TypeScript doesn't have access to the DOM like JavaScript. This means that whenever we try to access DOM elements, TypeScript is never sure that they actually exist.
-
+<br>
 The below example shows the problem:
+<br>
 
 ```bash
 const link = document.querySelector('a');
 
 console.log(link.href); // ERROR: Object is possibly 'null'. TypeScript can't be sure the anchor tag exists, as it can't access the DOM
 ```
-
+<br>
 TypeScript also has an Event object built in. So, if we add a submit event listener to our form, TypeScript will give us an error if we call any methods that aren't part of the Event object. Check out how cool TypeScript is – it can tell us when we've made a spelling mistake:
-
+<br>
 
 ```bash
 const form = document.getElementById('signup-form') as HTMLFormElement;
@@ -449,9 +495,12 @@ form.addEventListener('submit', (e: Event) => {
   console.log(e.tarrget); // ERROR: Property 'tarrget' does not exist on type 'Event'. Did you mean 'target'?
 });
 ```
-## Classes in TypeScript
+<br>
 
+## Classes in TypeScript
+<br>
 We can define the types that each piece of data should be in a class:
+<br>
 
 ```bash
 class Person {
@@ -475,14 +524,16 @@ const person2 = new Person('Sarah', 'yes', 6); // ERROR: Argument of type 'strin
 
 console.log(person1.sayHello()); // Hi, my name is Danny and I have 1 pets
 ```
-
+<br>
 We could then create a "people" array that only includes objects constructed from the "Person" class:
+<br>
 
 ```bash
 let People: Person[] = [person1, person2];
 ```
-
+<br>
 We can add access modifiers to the properties of a class. TypeScript also provides a new access modifier called "readonly".
+<br>
 
 ```bash
 class Person {
@@ -510,6 +561,7 @@ console.log(person1.isCool); // Error: private property - only accessible within
 console.log(person1.email); // Error: protected property - only accessible within Person class and its subclasses
 console.log(person1.pets); // Public property - so no problem
 ```
+<br>
 
 We can make our code more concise by constructing class properties this way:
 
@@ -530,12 +582,13 @@ class Person {
 const person1 = new Person('Danny', false, 'dan@e.com', 1);
 console.log(person1.name); // Danny
 ```
-
+<br>
 Writing it the above way, the properties are automatically assigned in the constructor – saving us from having to write them all out.
-
+<br>
 Note that if we omit the access modifier, by default the property will be public.
-
+<br>
 Classes can also be extended, just like in regular JavaScript:
+<br>
 
 ```bash
 class Programmer extends Person {
@@ -554,29 +607,31 @@ class Programmer extends Person {
   }
 }
 ```
+<br>
 
 ## Modules in TyoeScript
-
+<br>
 In JavaScript, a module is  just a file containing related code. Functionality can be imported and exported between modules, keeping the code well organized.
-
+<br>
 TypeScript also supports modules. The TypeScript files will compile down into multiple JavaScript files.
-
+<br>
 In the tsconfig.json file, change the following options to support modern importing and exporting:
 
 ```bash
  "target": "es2016",
  "module": "es2015"
 ```
-
+<br>
 (Although, for Node projects you very likely want "module": "CommonJS" – Node doesn't  yet support modern importing/exporting.)
-
+<br>
 Now, in your HTML file, change the script import to be of type module:
 
 ```bash
 <script type="module" src="/public/script.js"></script>
 ```
-
+<br>
 We can now import and export files using ES6:
+<br>
 
 ```bash
 // src/hello.ts
@@ -589,7 +644,7 @@ import { sayHi } from './hello.js';
 
 sayHi(); // Hello there!
 ```
-
+<br>
 Note: always import as a JavaScript file, even in TypeScript files.
 
 <br>
