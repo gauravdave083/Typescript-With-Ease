@@ -296,6 +296,318 @@ console.log(sayStuff.sayBye('Heisenberg')); // Bye Heisenberg
 
 Note that in the sayStuff object, sayHi or sayBye could be given an arrow function or a common JavaScript function – TypeScript doesn't care.
 
+<br>
+<br>
+
+## Functions in TypeScript
+
+We can define what the types the function arguments should be, as well as the return type of the function:
+
+```bash
+// Define a function called circle that takes a diam variable of type number, and returns a string
+function circle(diam: number): string {
+  return 'The circumference is ' + Math.PI * diam;
+}
+
+console.log(circle(10)); // The circumference is 31.41592653589793
+```
+<br>
+
+The same function, but with an ES6 arrow function:
+
+```bash
+const circle = (diam: number): string => {
+  return 'The circumference is ' + Math.PI * diam;
+};
+
+console.log(circle(10)); // The circumference is 31.41592653589793
+```
+
+<br>
+
+Notice how it isn't necessary to explicitly state that circle is a function; TypeScript infers it. TypeScript also infers the return type of the function, so it doesn't need to be stated either. Although, if the function is large, some developers like to explicitly state the return type for clarity.
+
+```bash
+// Using explicit typing 
+const circle: Function = (diam: number): string => {
+  return 'The circumference is ' + Math.PI * diam;
+};
+
+// Inferred typing - TypeScript sees that circle is a function that always returns a string, so no need to explicitly state it
+const circle = (diam: number) => {
+  return 'The circumference is ' + Math.PI * diam;
+};
+```
+
+We can add a question mark after a parameter to make it optional. Also notice below how "c" is a union type that can be a number or string:
+
+```bash
+const add = (a: number, b: number, c?: number | string) => {
+  console.log(c);
+
+  return a + b;
+};
+
+console.log(add(5, 4, 'I could pass a number, string, or nothing here!'));
+// I could pass a number, string, or nothing here!
+// 9
+```
+<br>
+
+A function that returns nothing is said to return void – a complete lack of any value. Below, the return type of void has been explicitly stated. But again, this isn't necessary as TypeScript will infer it.
+
+```bash
+const logMessage = (msg: string): void => {
+  console.log('This is the message: ' + msg);
+};
+
+logMessage('TypeScript is superb'); // This is the message: TypeScript is superb
+```
+
+If we want to declare a function variable, but not define it (say exactly what it does), then use a function signature. Below, the function "sayHello" must follow the signature after the colon:
+
+```bash
+// Declare the varible sayHello, and give it a function signature that takes a string and returns nothing.
+let sayHello: (name: string) => void;
+
+// Define the function, satisfying its signature
+sayHello = (name) => {
+  console.log('Hello ' + name);
+};
+
+sayHello('Danny'); // Hello Danny
+```
+
+## Dynamic (any) types
+
+Using the "any" type, we can basically revert TypeScript back into JavaScript:
+
+```bash
+let age: any = '100';
+age = 100;
+age = {
+  years: 100,
+  months: 2,
+};
+```
+<br>
+It's recommended to avoid using the "any" type as much as you can, as it prevents TypeScript from doing its job – and can lead to bugs.
+<br>
+
+## Type Aliases
+
+Type Aliases can reduce code duplication, keeping our code DRY. Below, we can see that the "PersonObject" type alias has prevented repetition, and acts as a single source of truth for what data a person object should contain.
+
+```bash
+type StringOrNumber = string | number;
+
+type PersonObject = {
+  name: string;
+  id: StringOrNumber;
+};
+
+const person1: PersonObject = {
+  name: 'John',
+  id: 1,
+};
+
+const person2: PersonObject = {
+  name: 'Delia',
+  id: 2,
+};
+
+const sayHello = (person: PersonObject) => {
+  return 'Hi ' + person.name;
+};
+
+const sayGoodbye = (person: PersonObject) => {
+  return 'Seeya ' + person.name;
+};
+```
+
+## The DOM and type casting
+
+TypeScript doesn't have access to the DOM like JavaScript. This means that whenever we try to access DOM elements, TypeScript is never sure that they actually exist.
+
+The below example shows the problem:
+
+```bash
+const link = document.querySelector('a');
+
+console.log(link.href); // ERROR: Object is possibly 'null'. TypeScript can't be sure the anchor tag exists, as it can't access the DOM
+```
+
+TypeScript also has an Event object built in. So, if we add a submit event listener to our form, TypeScript will give us an error if we call any methods that aren't part of the Event object. Check out how cool TypeScript is – it can tell us when we've made a spelling mistake:
+
+
+```bash
+const form = document.getElementById('signup-form') as HTMLFormElement;
+
+form.addEventListener('submit', (e: Event) => {
+  e.preventDefault(); // prevents the page from refreshing
+
+  console.log(e.tarrget); // ERROR: Property 'tarrget' does not exist on type 'Event'. Did you mean 'target'?
+});
+```
+## Classes in TypeScript
+
+We can define the types that each piece of data should be in a class:
+
+```bash
+class Person {
+  name: string;
+  isCool: boolean;
+  pets: number;
+
+  constructor(n: string, c: boolean, p: number) {
+    this.name = n;
+    this.isCool = c;
+    this.pets = p;
+  }
+
+  sayHello() {
+    return `Hi, my name is ${this.name} and I have ${this.pets} pets`;
+  }
+}
+
+const person1 = new Person('Danny', false, 1);
+const person2 = new Person('Sarah', 'yes', 6); // ERROR: Argument of type 'string' is not assignable to parameter of type 'boolean'.
+
+console.log(person1.sayHello()); // Hi, my name is Danny and I have 1 pets
+```
+
+We could then create a "people" array that only includes objects constructed from the "Person" class:
+
+```bash
+let People: Person[] = [person1, person2];
+```
+
+We can add access modifiers to the properties of a class. TypeScript also provides a new access modifier called "readonly".
+
+```bash
+class Person {
+  readonly name: string; // This property is immutable - it can only be read
+  private isCool: boolean; // Can only access or modify from methods within this class
+  protected email: string; // Can access or modify from this class and subclasses
+  public pets: number; // Can access or modify from anywhere - including outside the class
+
+  constructor(n: string, c: boolean, e: string, p: number) {
+    this.name = n;
+    this.isCool = c;
+    this.email = e;
+    this.pets = p;
+  }
+
+  sayMyName() {
+    console.log(`Your not Heisenberg, you're ${this.name}`);
+  }
+}
+
+const person1 = new Person('Danny', false, 'dan@e.com', 1);
+console.log(person1.name); // Fine
+person1.name = 'James'; // Error: read only
+console.log(person1.isCool); // Error: private property - only accessible within Person class
+console.log(person1.email); // Error: protected property - only accessible within Person class and its subclasses
+console.log(person1.pets); // Public property - so no problem
+```
+
+We can make our code more concise by constructing class properties this way:
+
+```bash
+class Person {
+  constructor(
+    readonly name: string,
+    private isCool: boolean,
+    protected email: string,
+    public pets: number
+  ) {}
+
+  sayMyName() {
+    console.log(`Your not Heisenberg, you're ${this.name}`);
+  }
+}
+
+const person1 = new Person('Danny', false, 'dan@e.com', 1);
+console.log(person1.name); // Danny
+```
+
+Writing it the above way, the properties are automatically assigned in the constructor – saving us from having to write them all out.
+
+Note that if we omit the access modifier, by default the property will be public.
+
+Classes can also be extended, just like in regular JavaScript:
+
+```bash
+class Programmer extends Person {
+  programmingLanguages: string[];
+
+  constructor(
+    name: string,
+    isCool: boolean,
+    email: string,
+    pets: number,
+    pL: string[]
+  ) {
+    // The super call must supply all parameters for base (Person) class, as the constructor is not inherited.
+    super(name, isCool, email, pets);
+    this.programmingLanguages = pL;
+  }
+}
+```
+
+## Modules in TyoeScript
+
+In JavaScript, a module is  just a file containing related code. Functionality can be imported and exported between modules, keeping the code well organized.
+
+TypeScript also supports modules. The TypeScript files will compile down into multiple JavaScript files.
+
+In the tsconfig.json file, change the following options to support modern importing and exporting:
+
+```bash
+ "target": "es2016",
+ "module": "es2015"
+```
+
+(Although, for Node projects you very likely want "module": "CommonJS" – Node doesn't  yet support modern importing/exporting.)
+
+Now, in your HTML file, change the script import to be of type module:
+
+```bash
+<script type="module" src="/public/script.js"></script>
+```
+
+We can now import and export files using ES6:
+
+```bash
+// src/hello.ts
+export function sayHi() {
+  console.log('Hello there!');
+}
+
+// src/script.ts
+import { sayHi } from './hello.js';
+
+sayHi(); // Hello there!
+```
+
+Note: always import as a JavaScript file, even in TypeScript files.
+
+<br>
+
+## Interfaces in TypeScript
+
+Interfaces define how an object should look:
+
+
+
+
+
+
+
+
+
+
+
 
 
 
