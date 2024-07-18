@@ -3,7 +3,7 @@ Creating a TypeScript GitHub repository for a "handnotes" project involves sever
 
 # Project Structure 
 
-'''bash
+"""bash
 handnotes/
 ├── src/
 │   ├── index.ts
@@ -16,4 +16,4 @@ handnotes/
 ├── package.json
 ├── tsconfig.json
 └── README.md
-'''
+"""
